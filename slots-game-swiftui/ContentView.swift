@@ -8,30 +8,59 @@
 import SwiftUI
 
 struct ContentView: View {
+    let slotTypes = ["apple", "cherry", "star"]
+    @State private var credits:Int = 1000
+    @State private var slot1:String = "apple"
+    @State private var slot2:String = "cherry"
+    @State private var slot3:String = "star"
+    
     var body: some View {
         VStack{
+            Spacer()
+            
             Text("SwiftUI Slots!")
                 .font(.largeTitle)
             
-            Text("Credits: 1000")
+            Spacer()
+            
+            Text("Credits: \(credits)")
+            
+            Spacer()
             
             HStack {
-                Image("apple")
-                    .scaledToFit()
-                Image("cherry")
-                    .scaledToFit()
-                Image("star")
+                Image(slot1)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                Image(slot2)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                Image(slot3)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
             
-            Button(action: {}){
+            Spacer()
+            
+            Button(action: {
+                slot1 = slotTypes[Int.random(in: 0...2)]
+                slot2 = slotTypes[Int.random(in: 0...2)]
+                slot3 = slotTypes[Int.random(in: 0...2)]
+                if slot1 == slot2 && slot2 == slot3 {
+                    credits += 50
+                }
+                else {
+                    credits -= 5
+                }
+            }){
                 Text("Spin")
                     .foregroundColor(Color.white)
                     .frame(width: UIScreen.main.bounds.width*0.4, height: 50, alignment: .center)
-                    .background(Color(red: 201 / 255, green: 14 / 255, blue: 65 / 255))
-                    .cornerRadius(20)
-                
+                    .background(Color(.systemPink))
+                    .cornerRadius(25)
+                    .font(.system(size: 18, design: .default))
             }
             
+            Spacer()
         }
     }
 }
